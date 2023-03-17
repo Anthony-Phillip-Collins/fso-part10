@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
   separator: {
     height: 30,
   },
+  flatList: { paddingHorizontal: 20 },
 });
 
 const repositories = [
@@ -59,11 +60,11 @@ const ItemSeparator = () => <View style={styles.separator} />;
 const RepositoryList = () => {
   return (
     <FlatList
+      style={styles.flatList}
       data={repositories}
       ItemSeparatorComponent={ItemSeparator}
       renderItem={({ item }) => <RepositoryItem data={item} />}
       keyExtractor={(item) => item.id}
-      // other props
     />
   );
 };

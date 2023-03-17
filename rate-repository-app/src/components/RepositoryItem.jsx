@@ -1,12 +1,7 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
+import Text from './Text';
 
 const styles = StyleSheet.create({
-  item: {
-    paddingHorizontal: 20,
-  },
-  body: {
-    fontSize: 16,
-  },
   avatar: {
     width: 50,
     height: 50,
