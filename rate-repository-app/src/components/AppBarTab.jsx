@@ -1,18 +1,14 @@
-import React from 'react';
-import { Pressable } from 'react-native';
-import Text from './Text';
+import React from "react";
+import Text from "./Text";
+import { Link } from "react-router-native";
 
-const AppBarTab = ({ text, onPress }) => {
+const AppBarTab = ({ text, uri }) => {
   return (
-    <Pressable
-      onPress={() => {
-        !!onPress && onPress();
-      }}
-    >
-      <Text style={{ color: 'white' }} fontWeight='bold' fontSize='heading'>
+    <Link to={uri}>
+      <Text style={{ color: "white" }} fontWeight="bold" fontSize="heading">
         {text}
       </Text>
-    </Pressable>
+    </Link>
   );
 };
 
