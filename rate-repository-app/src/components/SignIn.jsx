@@ -4,39 +4,7 @@ import * as Yup from "yup";
 import theme from "../theme";
 import FormikTextInput from "./FormikTextInput";
 import Text from "./Text";
-
-const styles = StyleSheet.create({
-  loginContainer: {
-    flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
-    width: "100%",
-    height: "50%",
-    padding: 10,
-    backgroundColor: "white",
-  },
-  textInput: {
-    borderColor: "gray",
-    borderWidth: 1,
-    margin: 10,
-    padding: 10,
-    borderRadius: 5,
-    width: "100%",
-    fontSize: 20,
-  },
-  button: {
-    backgroundColor: theme.colors.primary,
-    borderRadius: 5,
-    padding: 10,
-    margin: 10,
-    width: "100%",
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 20,
-    textAlign: "center",
-  },
-});
+import useSignIn from "../hooks/useSignIn";
 
 const initialValues = {
   username: "",
@@ -72,11 +40,20 @@ const SignInForm = ({ onSubmit }) => {
 };
 
 const SignIn = () => {
+  const { signIn } = useSignIn();
+
   return (
     <View style={styles.loginContainer}>
       <Formik
         initialValues={initialValues}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={async (values) => {
+          try {
+            const { data } = await signIn(values);
+            console.log(data);
+          } catch (error) {
+            console.log(error);
+          }
+        }}
         validationSchema={signInSchema}
       >
         {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
@@ -84,5 +61,38 @@ const SignIn = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  loginContainer: {
+    flex: 1,
+    justifyContent: "flex-start",
+    alignItems: "center",
+    width: "100%",
+    height: "50%",
+    padding: 10,
+    backgroundColor: "white",
+  },
+  textInput: {
+    borderColor: "gray",
+    borderWidth: 1,
+    margin: 10,
+    padding: 10,
+    borderRadius: 5,
+    width: "100%",
+    fontSize: 20,
+  },
+  button: {
+    backgroundColor: theme.colors.primary,
+    borderRadius: 5,
+    padding: 10,
+    margin: 10,
+    width: "100%",
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 20,
+    textAlign: "center",
+  },
+});
 
 export default SignIn;
