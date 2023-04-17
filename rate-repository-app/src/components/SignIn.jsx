@@ -1,11 +1,10 @@
 import { Formik } from "formik";
 import { Pressable, StyleSheet, View } from "react-native";
 import * as Yup from "yup";
+import useSignIn from "../hooks/useSignIn";
 import theme from "../theme";
 import FormikTextInput from "./FormikTextInput";
 import Text from "./Text";
-import useSignIn from "../hooks/useSignIn";
-import AuthStorage from "../utils/authStorage";
 
 const initialValues = {
   username: "",
@@ -42,7 +41,6 @@ const SignInForm = ({ onSubmit }) => {
 
 const SignIn = () => {
   const { signIn } = useSignIn();
-  const authStorage = new AuthStorage();
 
   return (
     <View style={styles.loginContainer}>
@@ -50,10 +48,9 @@ const SignIn = () => {
         initialValues={initialValues}
         onSubmit={async (values) => {
           try {
-            const { data } = await signIn(values);
-            await authStorage.setAccessToken(data.authenticate.accessToken);
-          } catch (error) {
-            console.log(error);
+            await signIn(values);
+          } catch (e) {
+            console.log(e);
           }
         }}
         validationSchema={signInSchema}

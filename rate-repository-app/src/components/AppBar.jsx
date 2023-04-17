@@ -1,35 +1,30 @@
 import Constants from "expo-constants";
 import React from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { useNavigate } from "react-router-native";
+import useMe from "../hooks/useMe";
 import theme from "../theme";
 import AppBarTab from "./AppBarTab";
-
-const data = [
-  {
-    text: "Repositories",
-    id: "0",
-    uri: "/",
-  },
-  {
-    text: "Sign in",
-    id: "1",
-    uri: "/signin",
-  },
-];
+import useSignOut from "../hooks/useSignOut";
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const AppBar = () => {
+  const { data } = useMe();
+  const navigate = useNavigate();
+  const signOut = useSignOut();
+
   return (
     <View style={styles.container}>
-      <FlatList
-        data={data}
-        ItemSeparatorComponent={ItemSeparator}
-        renderItem={({ item }) => <AppBarTab text={item.text} uri={item.uri} />}
-        keyExtractor={(item) => item.id}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-      />
+      <ScrollView horizontal>
+        <AppBarTab text="Repositories" onPress={() => navigate("/")} />
+        <ItemSeparator />
+        {data?.me ? (
+          <AppBarTab text="Sign out" onPress={() => signOut()} />
+        ) : (
+          <AppBarTab text="Sign in" onPress={() => navigate("/signin")} />
+        )}
+      </ScrollView>
     </View>
   );
 };

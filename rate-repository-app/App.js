@@ -1,24 +1,28 @@
-import { StatusBar } from "expo-status-bar";
+import { ApolloProvider } from "@apollo/client";
 import { NativeRouter } from "react-router-native";
 import Main from "./src/components/Main";
 import useFonts from "./src/hooks/useFonts";
 import createApolloClient from "./src/utils/apolloClient";
-import { ApolloProvider } from "@apollo/client";
+import AuthStorage from "./src/utils/authStorage";
+import AuthStorageContext from "./src/contexts/AuthStorageContext";
+
+const authStorage = new AuthStorage();
+const apolloClient = createApolloClient(authStorage);
 
 export default function App() {
   const { fontsLoaded } = useFonts();
-  const apolloClient = createApolloClient();
 
   if (!fontsLoaded) {
     return null;
   }
 
   return (
-    <ApolloProvider client={apolloClient}>
-      <NativeRouter>
-        <Main />
-      </NativeRouter>
-      <StatusBar style="auto" />
-    </ApolloProvider>
+    <NativeRouter>
+      <ApolloProvider client={apolloClient}>
+        <AuthStorageContext.Provider value={authStorage}>
+          <Main />
+        </AuthStorageContext.Provider>
+      </ApolloProvider>
+    </NativeRouter>
   );
 }
