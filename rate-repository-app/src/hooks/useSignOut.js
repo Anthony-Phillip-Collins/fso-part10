@@ -1,12 +1,11 @@
-import { useApolloClient } from "@apollo/client";
-import { useContext } from "react";
+import { ApolloConsumer, useApolloClient } from "@apollo/client";
 import { useNavigate } from "react-router-native";
-import AuthStorageContext from "../contexts/AuthStorageContext";
+import { useAuthStorage } from "../contexts/AuthStorageContext";
 
 const useSignOut = () => {
   const navigate = useNavigate();
   const client = useApolloClient();
-  const authStorage = useContext(AuthStorageContext);
+  const authStorage = useAuthStorage();
 
   const signOut = async () => {
     try {

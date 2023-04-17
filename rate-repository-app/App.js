@@ -1,15 +1,10 @@
-import { ApolloProvider } from "@apollo/client";
 import { NativeRouter } from "react-router-native";
 import Main from "./src/components/Main";
+import { AuthStorageProvider } from "./src/contexts/AuthStorageContext";
+import ApolloClientProvider from "./src/contexts/ApolloClientProvider";
 import useFonts from "./src/hooks/useFonts";
-import createApolloClient from "./src/utils/apolloClient";
-import AuthStorage from "./src/utils/authStorage";
-import AuthStorageContext from "./src/contexts/AuthStorageContext";
 
-const authStorage = new AuthStorage();
-const apolloClient = createApolloClient(authStorage);
-
-export default function App() {
+const App = () => {
   const { fontsLoaded } = useFonts();
 
   if (!fontsLoaded) {
@@ -18,11 +13,13 @@ export default function App() {
 
   return (
     <NativeRouter>
-      <ApolloProvider client={apolloClient}>
-        <AuthStorageContext.Provider value={authStorage}>
+      <AuthStorageProvider>
+        <ApolloClientProvider>
           <Main />
-        </AuthStorageContext.Provider>
-      </ApolloProvider>
+        </ApolloClientProvider>
+      </AuthStorageProvider>
     </NativeRouter>
   );
-}
+};
+
+export default App;
