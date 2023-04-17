@@ -5,6 +5,7 @@ import useSignIn from "../hooks/useSignIn";
 import theme from "../theme";
 import FormikTextInput from "./FormikTextInput";
 import Text from "./Text";
+import { useState } from "react";
 
 const initialValues = {
   username: "",
@@ -16,9 +17,11 @@ const signInSchema = Yup.object().shape({
   password: Yup.string().required("Password is required"),
 });
 
-const SignInForm = ({ onSubmit }) => {
+const SignInForm = ({ onSubmit, errorMessage }) => {
   return (
-    <View style={styles.loginContainer}>
+    <View>
+      {errorMessage && <Text style={styles.errorText}>{errorMessage}</Text>}
+
       <FormikTextInput
         name="username"
         placeholder="Username"
@@ -41,21 +44,26 @@ const SignInForm = ({ onSubmit }) => {
 
 const SignIn = () => {
   const { signIn } = useSignIn();
+  const [errorMessage, setErrorMessage] = useState("");
 
   return (
     <View style={styles.loginContainer}>
       <Formik
         initialValues={initialValues}
         onSubmit={async (values) => {
+          setErrorMessage("");
           try {
             await signIn(values);
           } catch (e) {
             console.log(e);
+            setErrorMessage("Invalid username or password");
           }
         }}
         validationSchema={signInSchema}
       >
-        {({ handleSubmit }) => <SignInForm onSubmit={handleSubmit} />}
+        {({ handleSubmit }) => (
+          <SignInForm onSubmit={handleSubmit} errorMessage={errorMessage} />
+        )}
       </Formik>
     </View>
   );
@@ -63,18 +71,13 @@ const SignIn = () => {
 
 const styles = StyleSheet.create({
   loginContainer: {
-    flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
-    width: "100%",
-    height: "50%",
-    padding: 10,
+    padding: 20,
     backgroundColor: "white",
   },
   textInput: {
     borderColor: "gray",
     borderWidth: 1,
-    margin: 10,
+    marginBottom: 20,
     padding: 10,
     borderRadius: 5,
     width: "100%",
@@ -84,13 +87,18 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
     borderRadius: 5,
     padding: 10,
-    margin: 10,
     width: "100%",
   },
   buttonText: {
     color: "white",
     fontSize: 20,
     textAlign: "center",
+  },
+  errorText: {
+    marginBottom: 20,
+    color: theme.colors.error,
+    textAlign: "left",
+    alignSelf: "flex-start",
   },
 });
 
