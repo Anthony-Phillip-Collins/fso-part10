@@ -1,9 +1,6 @@
 import { FlatList, StyleSheet, View } from "react-native";
-import { repositories as dummy } from "../data/dummy";
-import useRepositories from "../hooks/useRespositories";
-import RepositoryItem from "./RepositoryItem";
-
-const offline = false;
+import useRepositories from "../../hooks/useRespositories";
+import RepositoryItem from "../RepositoryItem";
 
 const styles = StyleSheet.create({
   separator: {
@@ -16,15 +13,25 @@ const ItemSeparator = () => <View style={styles.separator} />;
 const RepositoryList = () => {
   const { repositories } = useRepositories();
 
+  return (
+    <>
+      <RepositoryListContainer repositories={repositories} />
+    </>
+  );
+};
+
+export const RepositoryListContainer = ({ repositories }) => {
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
     : [];
 
   return (
     <FlatList
-      data={offline ? dummy : repositoryNodes}
+      data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
-      renderItem={({ item }) => <RepositoryItem data={item} />}
+      renderItem={({ item }) => (
+        <RepositoryItem data={item} testID="repositoryItem" />
+      )}
       keyExtractor={(item) => item.id}
     />
   );
