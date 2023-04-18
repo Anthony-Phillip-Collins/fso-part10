@@ -1,9 +1,10 @@
 import { StyleSheet, View } from "react-native";
 import { Navigate, Route, Routes } from "react-router-native";
+import HomePage from "../pages/HomePage";
+import RepositoryItemPage from "../pages/RepositoryItemPage";
+import SignInPage from "../pages/SignInPage";
 import theme from "../theme";
 import AppBar from "./AppBar";
-import RepositoryList from "./RepositoryList";
-import SignIn from "./SignIn";
 
 const styles = StyleSheet.create({
   container: {
@@ -19,8 +20,13 @@ const Main = () => {
       <AppBar />
 
       <Routes>
-        <Route path="/" element={<RepositoryList />} exact />
-        <Route path="/signin" element={<SignIn />} />
+        <Route path="/" element={<HomePage />} exact />
+        <Route
+          path="/repositories/:id"
+          element={<RepositoryItemPage />}
+          exact
+        />
+        <Route path="/signin" element={<SignInPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </View>

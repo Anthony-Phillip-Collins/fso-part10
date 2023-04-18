@@ -1,9 +1,10 @@
-import { Pressable, StyleSheet, View } from "react-native";
-import Text from "../Text";
-import FormikTextInput from "../FormikTextInput";
-import theme from "../../theme";
 import { Formik } from "formik";
+import { StyleSheet, View } from "react-native";
 import * as Yup from "yup";
+import theme from "../../theme";
+import FormikTextInput from "../FormikTextInput";
+import Text from "../Text";
+import UniversalButton from "../UniversalButton";
 
 const initialValues = {
   username: "",
@@ -30,6 +31,7 @@ const SignInContainer = ({ errorMessage, ...props }) => {
             name="username"
             placeholder="Username"
             style={styles.textInput}
+            containerStyle={styles.containerStyle}
             testID="usernameInput"
           />
           <FormikTextInput
@@ -37,17 +39,14 @@ const SignInContainer = ({ errorMessage, ...props }) => {
             placeholder="Password"
             secureTextEntry
             style={styles.textInput}
+            containerStyle={styles.containerStyle}
             testID="passwordInput"
           />
-          <Pressable
-            style={styles.button}
+          <UniversalButton
+            title="Sign in"
             onPress={handleSubmit}
             testID="submitButton"
-          >
-            <Text style={styles.buttonText} fontWeight="bold">
-              {"Sign in"}
-            </Text>
-          </Pressable>
+          />
         </View>
       )}
     </Formik>
@@ -55,25 +54,15 @@ const SignInContainer = ({ errorMessage, ...props }) => {
 };
 
 const styles = StyleSheet.create({
+  containerStyle: {
+    marginBottom: 15,
+  },
   textInput: {
     borderColor: "gray",
     borderWidth: 1,
-    marginBottom: 20,
-    padding: 10,
+    padding: 12,
     borderRadius: 5,
-    width: "100%",
-    fontSize: 20,
-  },
-  button: {
-    backgroundColor: theme.colors.primary,
-    borderRadius: 5,
-    padding: 10,
-    width: "100%",
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 20,
-    textAlign: "center",
+    fontSize: theme.fontSizes.body,
   },
   errorText: {
     marginBottom: 20,

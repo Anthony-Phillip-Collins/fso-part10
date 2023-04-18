@@ -1,12 +1,77 @@
 import { Image, StyleSheet, View } from "react-native";
 import theme from "../theme";
 import Text from "./Text";
+import UniversalButton from "./UniversalButton";
 
 const formatNumber = (num) => {
   if (num >= 1000) {
     return (num / 1000).toFixed(1) + "k";
   }
   return num;
+};
+
+const StatsItem = ({ label, value }) => {
+  return (
+    <View style={styles.statsItem}>
+      <Text fontSize="body" fontWeight="bold">
+        {formatNumber(value)}
+      </Text>
+      <Text fontSize="body" color="secondary">
+        {label}
+      </Text>
+    </View>
+  );
+};
+
+const LanguageBadge = ({ language }) => {
+  return (
+    <View style={styles.languageBadge}>
+      <Text style={styles.languageBadgeText}>{language}</Text>
+    </View>
+  );
+};
+
+const RepositoryItem = ({ data }) => {
+  const {
+    fullName,
+    description,
+    language,
+    forksCount,
+    stargazersCount,
+    ratingAverage,
+    reviewCount,
+    ownerAvatarUrl,
+    url,
+  } = data;
+  return (
+    <View style={styles.item} testID="repositoryItem">
+      <View style={styles.header}>
+        <Image style={styles.avatar} source={{ uri: ownerAvatarUrl }} />
+        <View style={styles.headingContainer}>
+          <Text style={styles.heading} fontWeight="bold" fontSize="subheading">
+            {fullName}
+          </Text>
+          <Text fontSize="subheading" color="secondary">
+            {description}
+          </Text>
+          <LanguageBadge language={language} />
+        </View>
+      </View>
+      <View style={styles.statsContainer}>
+        <StatsItem label="Stars" value={stargazersCount} />
+        <StatsItem label="Forks" value={forksCount} />
+        <StatsItem label="Reviews" value={reviewCount} />
+        <StatsItem label="Rating" value={ratingAverage} />
+      </View>
+      {url && (
+        <UniversalButton
+          url={url}
+          style={styles.openButton}
+          title="Open in GitHub"
+        />
+      )}
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -66,63 +131,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 5,
   },
+
+  openButton: {
+    marginTop: 20,
+  },
 });
-
-const StatsItem = ({ label, value }) => {
-  return (
-    <View style={styles.statsItem}>
-      <Text fontSize="body" fontWeight="bold">
-        {formatNumber(value)}
-      </Text>
-      <Text fontSize="body" color="secondary">
-        {label}
-      </Text>
-    </View>
-  );
-};
-
-const LanguageBadge = ({ language }) => {
-  return (
-    <View style={styles.languageBadge}>
-      <Text style={styles.languageBadgeText}>{language}</Text>
-    </View>
-  );
-};
-
-const RepositoryItem = ({ data }) => {
-  const {
-    fullName,
-    description,
-    language,
-    forksCount,
-    stargazersCount,
-    ratingAverage,
-    reviewCount,
-    ownerAvatarUrl,
-  } = data;
-  return (
-    <View style={styles.item} testID="repositoryItem">
-      <View style={styles.header}>
-        <Image style={styles.avatar} source={{ uri: ownerAvatarUrl }} />
-        <View style={styles.headingContainer}>
-          <Text style={styles.heading} fontWeight="bold" fontSize="subheading">
-            {fullName}
-          </Text>
-          <Text fontSize="subheading" color="secondary">
-            {description}
-          </Text>
-          <LanguageBadge language={language} />
-        </View>
-      </View>
-
-      <View style={styles.statsContainer}>
-        <StatsItem label="Stars" value={stargazersCount} />
-        <StatsItem label="Forks" value={forksCount} />
-        <StatsItem label="Reviews" value={reviewCount} />
-        <StatsItem label="Rating" value={ratingAverage} />
-      </View>
-    </View>
-  );
-};
 
 export default RepositoryItem;

@@ -41,10 +41,10 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   separator: {
-    width: 2,
-    backgroundColor: "white",
-    marginLeft: 20,
-    marginRight: 20,
+    width: 1,
+    backgroundColor: "gray",
+    marginLeft: 10,
+    marginRight: 10,
   },
 });
 
