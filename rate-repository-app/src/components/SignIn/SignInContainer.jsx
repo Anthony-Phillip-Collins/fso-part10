@@ -55,7 +55,7 @@ const SignInContainer = ({ errorMessage, ...props }) => {
 
 const styles = StyleSheet.create({
   containerStyle: {
-    marginBottom: 15,
+    marginBottom: theme.spacing.large,
   },
   textInput: {
     borderColor: "gray",
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     fontSize: theme.fontSizes.body,
   },
   errorText: {
-    marginBottom: 20,
+    marginBottom: theme.spacing.large,
     color: theme.colors.error,
     textAlign: "left",
     alignSelf: "flex-start",

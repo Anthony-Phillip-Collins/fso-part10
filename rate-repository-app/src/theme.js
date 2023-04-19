@@ -20,6 +20,12 @@ const fontSizes = {
   heading: 20,
 };
 
+const spacing = {
+  small: 5,
+  normal: 10,
+  large: 20,
+};
+
 const buttons = {
   primary: {
     container: {
@@ -44,6 +50,7 @@ buttons.primaryDanger = {
 const theme = {
   colors,
   buttons,
+  spacing,
   fontWeights,
   fontSizes,
   fonts: {

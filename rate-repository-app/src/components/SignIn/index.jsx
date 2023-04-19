@@ -2,6 +2,7 @@ import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import useSignIn from "../../hooks/useSignIn";
 import SignInContainer from "./SignInContainer";
+import theme from "../../theme";
 
 const SignIn = () => {
   const { signIn } = useSignIn();
@@ -27,7 +28,7 @@ const SignIn = () => {
 
 const styles = StyleSheet.create({
   loginContainer: {
-    padding: 20,
+    padding: theme.spacing.large,
     backgroundColor: "white",
   },
 });

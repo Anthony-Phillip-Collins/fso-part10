@@ -3,6 +3,9 @@ import { useParams } from "react-router-native";
 import Text from "../components/Text";
 import { GET_REPOSITORY } from "../graphql/queries";
 import RepositoryItem from "../components/RepositoryItem";
+import ReviewItem from "../components/ReviewItem";
+import { FlatList, View } from "react-native";
+import theme from "../theme";
 
 const RepositoryItemPage = () => {
   const params = useParams();
@@ -21,8 +24,22 @@ const RepositoryItemPage = () => {
   }
 
   const { repository } = data;
+  const reviews = repository?.reviews?.edges?.map((edge) => edge.node);
 
-  return <RepositoryItem data={repository} />;
+  return (
+    <>
+      <FlatList
+        data={reviews}
+        ListHeaderComponent={() => <RepositoryItem data={repository} />}
+        ListHeaderComponentStyle={{ marginBottom: theme.spacing.normal }}
+        renderItem={({ item }) => <ReviewItem data={item} />}
+        ItemSeparatorComponent={() => (
+          <View style={{ height: theme.spacing.normal }} />
+        )}
+        keyExtractor={({ id }) => id}
+      />
+    </>
+  );
 };
 
 export default RepositoryItemPage;

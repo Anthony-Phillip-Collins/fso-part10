@@ -79,14 +79,14 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     backgroundColor: "white",
-    paddingVertical: 20,
-    paddingHorizontal: 20,
+    paddingVertical: theme.spacing.large,
+    paddingHorizontal: theme.spacing.large,
   },
 
   header: {
     display: "flex",
     flexDirection: "row",
-    marginBottom: 20,
+    marginBottom: theme.spacing.large,
   },
 
   avatar: {
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     height: 50,
     resizeMode: "contain",
     borderRadius: 6,
-    marginRight: 20,
+    marginRight: theme.spacing.large,
   },
 
   headingContainer: {
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   },
 
   heading: {
-    marginBottom: 5,
+    marginBottom: theme.spacing.small,
   },
 
   statsContainer: {
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
     borderRadius: 5,
     alignSelf: "flex-start",
-    marginTop: 10,
+    marginTop: theme.spacing.normal,
   },
 
   languageBadgeText: {
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   },
 
   openButton: {
-    marginTop: 20,
+    marginTop: theme.spacing.large,
   },
 });
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Pressable } from "react-native";
-import Text from "./Text";
+import Text from "../Text";
 
 const AppBarTab = ({ text, onPress }) => {
   return (

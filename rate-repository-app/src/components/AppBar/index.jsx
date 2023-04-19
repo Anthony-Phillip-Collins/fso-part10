@@ -1,16 +1,17 @@
+import { useQuery } from "@apollo/client";
 import Constants from "expo-constants";
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { useNavigate } from "react-router-native";
-import useMe from "../hooks/useMe";
-import theme from "../theme";
+import { ME } from "../../graphql/queries";
+import useSignOut from "../../hooks/useSignOut";
+import theme from "../../theme";
 import AppBarTab from "./AppBarTab";
-import useSignOut from "../hooks/useSignOut";
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const AppBar = () => {
-  const { data } = useMe();
+  const { data } = useQuery(ME);
   const navigate = useNavigate();
   const signOut = useSignOut();
 
@@ -32,7 +33,7 @@ const AppBar = () => {
 const styles = StyleSheet.create({
   container: {
     paddingVertical: Constants.statusBarHeight,
-    paddingHorizontal: 20,
+    paddingHorizontal: theme.spacing.large,
     backgroundColor: theme.colors.appBarBackground,
     minHeight: 100,
     display: "flex",
@@ -43,8 +44,8 @@ const styles = StyleSheet.create({
   separator: {
     width: 1,
     backgroundColor: "gray",
-    marginLeft: 10,
-    marginRight: 10,
+    marginLeft: theme.spacing.normal,
+    marginRight: theme.spacing.normal,
   },
 });
 
