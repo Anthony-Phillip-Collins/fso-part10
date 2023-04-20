@@ -2,6 +2,8 @@ import { NativeRouter } from "react-router-native";
 import Main from "./src/components/Main";
 import { AuthStorageProvider } from "./src/contexts/AuthStorageContext";
 import ApolloClientProvider from "./src/contexts/ApolloClientProvider";
+import { Provider as PaperProvider } from "react-native-paper";
+
 import useFonts from "./src/hooks/useFonts";
 
 const App = () => {
@@ -15,7 +17,9 @@ const App = () => {
     <NativeRouter>
       <AuthStorageProvider>
         <ApolloClientProvider>
-          <Main />
+          <PaperProvider>
+            <Main />
+          </PaperProvider>
         </ApolloClientProvider>
       </AuthStorageProvider>
     </NativeRouter>

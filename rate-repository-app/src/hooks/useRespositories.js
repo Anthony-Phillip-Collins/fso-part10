@@ -24,11 +24,14 @@ export const useRepositoriesFetch = () => {
   return { repositories, loading, refetch: fetchRepositories };
 };
 
-const useRepositories = () => {
-  const { loading, error, data, refetch } = useQuery(GET_REPOSITORIES, {
-    fetchPolicy: "cache-and-network",
-  });
-  return { repositories: data?.repositories, loading, error, refetch };
-};
+const useRepositories2 = () =>
+  // variables = { orderBy: "CREATED_AT", orderDirection: "DESC" },
+  {
+    const { loading, error, data, refetch } = useQuery(GET_REPOSITORIES, {
+      fetchPolicy: "cache-and-network",
+      // variables,
+    });
+    return { repositories: data?.repositories, loading, error, refetch };
+  };
 
-export default useRepositories;
+export default useRepositories2;

@@ -8,6 +8,7 @@ import AppBar from "./AppBar";
 import CreateReviewPage from "../pages/CreateReviewPage";
 import MyReviewsPage from "../pages/MyReviewsPage";
 import SignUpPage from "../pages/SignUpPage";
+import { StatusBar } from "expo-status-bar";
 
 const styles = StyleSheet.create({
   container: {
@@ -34,6 +35,8 @@ const Main = () => {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+
+      <StatusBar style="light" />
     </View>
   );
 };

@@ -28,20 +28,19 @@ const Item = (props) => {
   );
 };
 
-const RepositoryListContainer = ({ repositories }) => {
+const RepositoryListContainer = ({ repositories, ...props }) => {
   const repositoryNodes = repositories
     ? repositories?.edges?.map((edge) => edge.node)
     : [];
 
   return (
-    <View>
-      <FlatList
-        data={repositoryNodes}
-        ItemSeparatorComponent={ItemSeparator}
-        renderItem={({ item }) => <Item data={item} />}
-        keyExtractor={(item) => item.id}
-      />
-    </View>
+    <FlatList
+      {...props}
+      data={repositoryNodes}
+      ItemSeparatorComponent={ItemSeparator}
+      renderItem={({ item }) => <Item data={item} />}
+      keyExtractor={(item) => item.id}
+    />
   );
 };
 

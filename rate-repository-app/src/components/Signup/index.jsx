@@ -17,7 +17,7 @@ const SignUp = () => {
           setErrorMessage("");
           try {
             await signUp(values);
-            navigate("/my-reviews");
+            navigate("/");
           } catch (e) {
             console.log(e);
             setErrorMessage("Invalid username or password");

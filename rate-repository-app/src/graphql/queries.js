@@ -2,8 +2,11 @@ import { gql } from "@apollo/client";
 import { RepositoryFragment, ReviewFragment } from "./fragments";
 
 export const GET_REPOSITORIES = gql`
-  query GetRepositories {
-    repositories {
+  query GetRepositories(
+    $orderBy: AllRepositoriesOrderBy = CREATED_AT
+    $orderDirection: OrderDirection = DESC
+  ) {
+    repositories(orderBy: $orderBy, orderDirection: $orderDirection) {
       edges {
         cursor
         node {
