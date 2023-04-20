@@ -3,10 +3,19 @@ import Select from "../Select";
 import Text from "../Text";
 import RepositoryListContainer from "./RepositoryListContainer";
 import useRespositories from "../../hooks/useRespositories";
+import { Searchbar } from "react-native-paper";
+import theme from "../../theme";
+import { View } from "react-native";
+import { useDebounce } from "use-debounce";
 
 const RepositoryList = () => {
   const { repositories, error, refetch } = useRespositories();
   const [selectedOption, setSelectedOption] = useState(null);
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQueryDebounce] = useDebounce(searchQuery, 500);
+
+  const onChangeSearch = (query) => setSearchQuery(query);
 
   const options = [
     {
@@ -34,8 +43,9 @@ const RepositoryList = () => {
     refetch({
       orderBy: selectedOption?.orderBy,
       orderDirection: selectedOption?.orderDirection,
+      searchKeyword: searchQueryDebounce,
     });
-  }, [selectedOption]);
+  }, [selectedOption, searchQueryDebounce]);
 
   if (error) return <Text>{error.message}</Text>;
 
@@ -44,12 +54,38 @@ const RepositoryList = () => {
       <RepositoryListContainer
         repositories={repositories}
         ListHeaderComponent={
-          <Select
-            data={options}
-            onSelect={setSelectedOption}
-            selected={selectedOption}
-            placeholder="Select an item..."
-          />
+          <>
+            <View
+              style={{
+                marginHorizontal: theme.spacing.large,
+                marginTop: theme.spacing.large,
+                marginBottom: 0,
+                backgroundColor: theme.colors.secondary,
+              }}
+            >
+              <Searchbar
+                placeholder="Search"
+                onChangeText={onChangeSearch}
+                value={searchQuery}
+                style={{
+                  backgroundColor: "white",
+                  borderRadius: 5,
+                  shadowOffset: {
+                    width: 0,
+                    height: 0,
+                  },
+                  shadowOpacity: 0.2,
+                  shadowRadius: 3,
+                }}
+              />
+            </View>
+            <Select
+              data={options}
+              onSelect={setSelectedOption}
+              selected={selectedOption}
+              placeholder="Select an item..."
+            />
+          </>
         }
       />
     </>

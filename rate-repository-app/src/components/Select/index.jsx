@@ -102,6 +102,7 @@ const Select = ({ data, onSelect, selected, placeholder }) => {
           paddingVertical: theme.spacing.large,
           flexDirection: "row-reverse",
           justifyContent: "space-between",
+          backgroundColor: theme.colors.secondary,
         }}
         textColor="black"
       >
