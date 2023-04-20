@@ -2,45 +2,67 @@ import { format } from "date-fns";
 import { View } from "react-native";
 import theme from "../theme";
 import Text from "./Text";
+import UniversalButton from "./UniversalButton";
 
-const Rating = ({ rating }) => (
-  <View style={styles.rating.container}>
-    <Text style={styles.rating.text}>{rating}</Text>
-  </View>
-);
-
-const ReviewItem = ({ data }) => {
+const ReviewItem = ({ data, isMyReview, onDelete }) => {
   const {
     rating,
     createdAt,
     text,
     user: { username },
+    repository: { fullName: repoName, id },
   } = data;
 
   const createdAtFormatted = format(new Date(createdAt), "dd.MM.yyyy");
 
   return (
     <View style={styles.container}>
-      <View style={styles.column.left}>
-        <Rating rating={rating} />
+      <View style={styles.content}>
+        <View style={styles.column.left}>
+          <View style={styles.rating.container}>
+            <Text style={styles.rating.text}>{rating}</Text>
+          </View>
+        </View>
+
+        <View style={styles.column.right}>
+          <Text fontWeight="bold">{isMyReview ? repoName : username}</Text>
+          <Text style={styles.createdAt}>{createdAtFormatted}</Text>
+          <Text style={styles.text}>{text}</Text>
+        </View>
       </View>
-      <View style={styles.column.right}>
-        <Text fontWeight="bold">{username}</Text>
-        <Text style={styles.createdAt}>{createdAtFormatted}</Text>
-        <Text style={styles.text}>{text}</Text>
-      </View>
+
+      {isMyReview && (
+        <View style={styles.edit}>
+          <UniversalButton
+            to={`/repositories/${id}`}
+            title="View repository"
+            style={{ flex: 1, marginRight: theme.spacing.normal }}
+          />
+          <UniversalButton
+            title="Delete review"
+            style={{ flex: 1 }}
+            type="primaryDanger"
+            onPress={onDelete}
+          />
+        </View>
+      )}
     </View>
   );
 };
 
 const styles = {
   container: {
+    ...theme.containers.main,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+  },
+  content: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",
-    backgroundColor: "white",
-    padding: theme.spacing.large,
   },
   column: {
     left: {
@@ -51,7 +73,7 @@ const styles = {
     right: {
       display: "flex",
       flexDirection: "column",
-      flexShrink: 1,
+      flex: 1,
     },
   },
   createdAt: {
@@ -78,6 +100,12 @@ const styles = {
       fontWeight: theme.fontWeights.bold,
       fontSize: theme.fontSizes.heading,
     },
+  },
+  edit: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: theme.spacing.large,
   },
 };
 

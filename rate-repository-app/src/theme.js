@@ -47,10 +47,38 @@ buttons.primaryDanger = {
   container: { ...buttons.primary.container, backgroundColor: colors.error },
 };
 
+const form = {
+  container: {
+    marginBottom: spacing.large,
+  },
+  textInput: {
+    borderColor: "gray",
+    borderWidth: 1,
+    padding: 12,
+    borderRadius: 5,
+    fontSize: fontSizes.body,
+  },
+  errorText: {
+    marginBottom: spacing.large,
+    color: colors.error,
+    textAlign: "left",
+    alignSelf: "flex-start",
+  },
+};
+
+const containers = {
+  main: {
+    padding: spacing.large,
+    backgroundColor: "white",
+  },
+};
+
 const theme = {
   colors,
   buttons,
   spacing,
+  form,
+  containers,
   fontWeights,
   fontSizes,
   fonts: {

@@ -1,17 +1,16 @@
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-native";
+import RepositoryItem from "../components/RepositoryItem";
+import ReviewList from "../components/ReviewList";
 import Text from "../components/Text";
 import { GET_REPOSITORY } from "../graphql/queries";
-import RepositoryItem from "../components/RepositoryItem";
-import ReviewItem from "../components/ReviewItem";
-import { FlatList, View } from "react-native";
 import theme from "../theme";
 
 const RepositoryItemPage = () => {
   const params = useParams();
-  console.log("Load", params.id);
 
   const { data, loading, error } = useQuery(GET_REPOSITORY, {
+    fetchPolicy: "cache-and-network",
     variables: { repositoryId: params.id },
   });
 
@@ -28,15 +27,10 @@ const RepositoryItemPage = () => {
 
   return (
     <>
-      <FlatList
+      <ReviewList
         data={reviews}
         ListHeaderComponent={() => <RepositoryItem data={repository} />}
         ListHeaderComponentStyle={{ marginBottom: theme.spacing.normal }}
-        renderItem={({ item }) => <ReviewItem data={item} />}
-        ItemSeparatorComponent={() => (
-          <View style={{ height: theme.spacing.normal }} />
-        )}
-        keyExtractor={({ id }) => id}
       />
     </>
   );

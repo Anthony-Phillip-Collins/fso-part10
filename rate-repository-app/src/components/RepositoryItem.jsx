@@ -79,8 +79,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     backgroundColor: "white",
-    paddingVertical: theme.spacing.large,
-    paddingHorizontal: theme.spacing.large,
+    padding: theme.spacing.large,
   },
 
   header: {

@@ -11,19 +11,35 @@ import AppBarTab from "./AppBarTab";
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const AppBar = () => {
-  const { data } = useQuery(ME);
+  const { data } = useQuery(ME, { fetchPolicy: "cache-and-network" });
   const navigate = useNavigate();
   const signOut = useSignOut();
 
   return (
     <View style={styles.container}>
-      <ScrollView horizontal>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <AppBarTab text="Repositories" onPress={() => navigate("/")} />
         <ItemSeparator />
         {data?.me ? (
-          <AppBarTab text="Sign out" onPress={() => signOut()} />
+          <>
+            <AppBarTab
+              text="Create review"
+              onPress={() => navigate("/create-review")}
+            />
+            <ItemSeparator />
+            <AppBarTab
+              text="My reviews"
+              onPress={() => navigate("/my-reviews")}
+            />
+            <ItemSeparator />
+            <AppBarTab text="Sign out" onPress={() => signOut()} />
+          </>
         ) : (
-          <AppBarTab text="Sign in" onPress={() => navigate("/signin")} />
+          <>
+            <AppBarTab text="Sign in" onPress={() => navigate("/signin")} />
+            <ItemSeparator />
+            <AppBarTab text="Sign up" onPress={() => navigate("/signup")} />
+          </>
         )}
       </ScrollView>
     </View>

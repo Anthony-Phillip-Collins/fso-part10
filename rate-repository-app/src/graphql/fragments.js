@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 
-export const RepositoryItemFragment = gql`
-  fragment RepositoryItem on Repository {
+export const RepositoryFragment = gql`
+  fragment RepositoryFields on Repository {
     id
     fullName
     description
@@ -11,5 +11,24 @@ export const RepositoryItemFragment = gql`
     ratingAverage
     reviewCount
     ownerAvatarUrl
+  }
+`;
+
+export const ReviewFragment = gql`
+  fragment ReviewFields on Review {
+    id
+    text
+    rating
+    createdAt
+    user {
+      username
+    }
+    repository {
+      id
+      url
+      fullName
+      ownerName
+      name
+    }
   }
 `;

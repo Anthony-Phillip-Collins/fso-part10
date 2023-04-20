@@ -5,11 +5,13 @@ import RepositoryItemPage from "../pages/RepositoryItemPage";
 import SignInPage from "../pages/SignInPage";
 import theme from "../theme";
 import AppBar from "./AppBar";
+import CreateReviewPage from "../pages/CreateReviewPage";
+import MyReviewsPage from "../pages/MyReviewsPage";
+import SignUpPage from "../pages/SignUpPage";
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
-    flexShrink: 1,
+    flex: 1,
     backgroundColor: theme.colors.mainBackground,
   },
 });
@@ -26,7 +28,10 @@ const Main = () => {
           element={<RepositoryItemPage />}
           exact
         />
+        <Route path="/create-review" element={<CreateReviewPage />} />
+        <Route path="/my-reviews" element={<MyReviewsPage />} />
         <Route path="/signin" element={<SignInPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </View>

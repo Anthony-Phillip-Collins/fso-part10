@@ -1,23 +1,23 @@
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { useNavigate } from "react-router-native";
-import useSignIn from "../../hooks/useSignIn";
-import SignInContainer from "./SignInContainer";
 import theme from "../../theme";
+import SignUpContainer from "./SignUpContainer";
+import useSignUp from "../../hooks/useSignUp";
+import { useNavigate } from "react-router-native";
 
-const SignIn = () => {
-  const { signIn } = useSignIn();
+const SignUp = () => {
+  const { signUp } = useSignUp();
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   return (
     <View style={styles.loginContainer}>
-      <SignInContainer
+      <SignUpContainer
         onSubmit={async (values) => {
           setErrorMessage("");
           try {
-            await signIn(values);
-            navigate("/");
+            await signUp(values);
+            navigate("/my-reviews");
           } catch (e) {
             console.log(e);
             setErrorMessage("Invalid username or password");
@@ -30,7 +30,10 @@ const SignIn = () => {
 };
 
 const styles = StyleSheet.create({
-  loginContainer: theme.containers.main,
+  loginContainer: {
+    padding: theme.spacing.large,
+    backgroundColor: "white",
+  },
 });
 
-export default SignIn;
+export default SignUp;

@@ -28,7 +28,6 @@ class AuthStorage {
       // saving error
       console.log(e);
     }
-    console.log("Token saved.");
   }
 
   async removeAccessToken() {
@@ -38,8 +37,6 @@ class AuthStorage {
       // remove error
       console.log(e);
     }
-
-    console.log("Token removed.");
   }
 }
 
