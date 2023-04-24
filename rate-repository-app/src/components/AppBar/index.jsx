@@ -11,7 +11,9 @@ import AppBarTab from "./AppBarTab";
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const AppBar = () => {
-  const { data } = useQuery(ME, { fetchPolicy: "cache-and-network" });
+  const { data } = useQuery(ME, {
+    fetchPolicy: "cache-and-network",
+  });
   const navigate = useNavigate();
   const signOut = useSignOut();
 

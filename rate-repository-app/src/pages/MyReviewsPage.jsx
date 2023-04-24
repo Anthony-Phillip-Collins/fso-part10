@@ -2,19 +2,20 @@ import { useMutation, useQuery } from "@apollo/client";
 import ReviewItem from "../components/ReviewItem";
 import ReviewList from "../components/ReviewList";
 import { DELETE_REVIEW } from "../graphql/mutations";
-import { GET_MY_REVIEWS } from "../graphql/queries";
+import { ME } from "../graphql/queries";
 import Text from "../components/Text";
-import { StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import theme from "../theme";
 import UniversalButton from "../components/UniversalButton";
 
 const MyReviewsPage = () => {
-  const { data } = useQuery(GET_MY_REVIEWS, {
+  const { data } = useQuery(ME, {
     fetchPolicy: "cache-and-network",
+    variables: { includeReviews: true },
   });
 
   const [deleteReview] = useMutation(DELETE_REVIEW, {
-    refetchQueries: [{ query: GET_MY_REVIEWS }],
+    refetchQueries: [{ query: ME, variables: { includeReviews: true } }],
   });
 
   const reviews = data?.me?.reviews.edges.map((edge) => edge.node);
@@ -30,6 +31,33 @@ const MyReviewsPage = () => {
     );
   }
 
+  const onDelete = async (id) => {
+    Alert.alert(
+      "Delete Review",
+      "Are you sure you want to delete this review?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => {
+            // console.log("Cancel Pressed");
+          },
+        },
+        {
+          text: "OK",
+          onPress: async () => {
+            try {
+              await deleteReview({
+                variables: { deleteReviewId: id },
+              });
+            } catch (e) {
+              console.log(e);
+            }
+          },
+        },
+      ],
+    );
+  };
+
   return (
     <ReviewList
       data={reviews}
@@ -37,15 +65,7 @@ const MyReviewsPage = () => {
         <ReviewItem
           data={item}
           isMyReview={true}
-          onDelete={async () => {
-            try {
-              await deleteReview({
-                variables: { deleteReviewId: item.id },
-              });
-            } catch (e) {
-              console.log(e);
-            }
-          }}
+          onDelete={() => onDelete(item.id)}
         />
       )}
       keyExtractor={({ id }) => id}
