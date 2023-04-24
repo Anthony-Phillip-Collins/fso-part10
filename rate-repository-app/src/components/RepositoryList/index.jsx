@@ -9,13 +9,20 @@ import { View } from "react-native";
 import { useDebounce } from "use-debounce";
 
 const RepositoryList = () => {
-  const { repositories, error, refetch } = useRespositories();
+  const { repositories, error, refetch, fetchMore } = useRespositories({
+    first: 4,
+  });
   const [selectedOption, setSelectedOption] = useState(null);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchQueryDebounce] = useDebounce(searchQuery, 500);
 
   const onChangeSearch = (query) => setSearchQuery(query);
+
+  const onEndReached = async () => {
+    await fetchMore();
+    // console.log("You have reached the end of the list", fetchMoreResult);
+  };
 
   const options = [
     {
@@ -53,6 +60,8 @@ const RepositoryList = () => {
     <>
       <RepositoryListContainer
         repositories={repositories}
+        onEndReached={onEndReached}
+        onEndReachThreshold={0.5}
         ListHeaderComponent={
           <>
             <View

@@ -3,20 +3,30 @@ import { RepositoryFragment, ReviewFragment } from "./fragments";
 
 export const GET_REPOSITORIES = gql`
   query GetRepositories(
+    $first: Int = 3
+    $after: String = ""
     $orderBy: AllRepositoriesOrderBy = CREATED_AT
     $orderDirection: OrderDirection = DESC
     $searchKeyword: String = ""
   ) {
     repositories(
+      first: $first
+      after: $after
       orderBy: $orderBy
       orderDirection: $orderDirection
       searchKeyword: $searchKeyword
     ) {
+      totalCount
       edges {
         cursor
         node {
           ...RepositoryFields
         }
+      }
+      pageInfo {
+        endCursor
+        startCursor
+        hasNextPage
       }
     }
   }
@@ -25,12 +35,23 @@ export const GET_REPOSITORIES = gql`
 `;
 
 export const GET_REPOSITORY = gql`
-  query GetRepository($repositoryId: ID!) {
+  query GetReviews(
+    $repositoryId: ID!
+    $reviewsFirst: Int = 3
+    $reviewsAfter: String = ""
+  ) {
     repository(id: $repositoryId) {
       ...RepositoryFields
       url
-      reviews {
+      reviews(first: $reviewsFirst, after: $reviewsAfter) {
+        pageInfo {
+          endCursor
+          hasNextPage
+          startCursor
+        }
+        totalCount
         edges {
+          cursor
           node {
             ...ReviewFields
           }
