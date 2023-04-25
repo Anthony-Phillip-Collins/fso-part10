@@ -22,10 +22,7 @@ const useRepository = (
     if (!canFetchMore) {
       return;
     }
-    // console.log("????", variables, {
-    //   ...variables,
-    //   reviewsAfter: data.repository.reviews.pageInfo.endCursor,
-    // });
+
     return await fetchMore({
       variables: {
         ...variables,

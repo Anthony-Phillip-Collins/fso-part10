@@ -37,31 +37,7 @@ const cache = new InMemoryCache({
     },
     Repository: {
       fields: {
-        reviews: {
-          keyArgs: false,
-          merge(existing, incoming) {
-            const edges = [
-              ...(existing?.edges ?? []),
-              ...(incoming.edges ?? []),
-            ];
-
-            const unique = edges.reduce((a, b) => {
-              const duplicate = a.find(({ node }) => {
-                return node.__ref === b.node.__ref;
-              });
-
-              if (!duplicate) {
-                return a.concat(b);
-              }
-              return a;
-            }, []);
-
-            return {
-              ...incoming,
-              edges: unique,
-            };
-          },
-        },
+        reviews: relayStylePagination(),
       },
     },
   },
