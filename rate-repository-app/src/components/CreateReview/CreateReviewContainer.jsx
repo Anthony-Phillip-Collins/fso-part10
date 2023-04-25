@@ -7,10 +7,10 @@ import Text from "../Text";
 import UniversalButton from "../UniversalButton";
 
 const initialValues = {
-  ownerName: "zeit",
-  repositoryName: "next.js",
-  rating: "100",
-  text: "Sweet as!",
+  ownerName: "",
+  repositoryName: "",
+  rating: "",
+  text: "",
 };
 
 const signInSchema = Yup.object().shape({
